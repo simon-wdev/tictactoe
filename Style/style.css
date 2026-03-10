@@ -1,0 +1,13 @@
+.square{
+    height: 100px;
+    width: 100px;
+    border: solid black 1px;
+}
+
+.game{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 306px;
+    height: 306px;
+}
