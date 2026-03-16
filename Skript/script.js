@@ -10,7 +10,7 @@ const gameBoard = (function(){ //Module Pattern
             
     }
 
-    return {getPlayGround, setPlayGround};
+    return {getPlayGround, setPlayGround}; //gibt die Funktionen für Außen zurück, playGround bleibt privat
 
 
 })();
@@ -57,12 +57,12 @@ const gameController = (function(){
         if (currentPlayer === player1) {
             gameBoard.setPlayGround(index, player1.playerSymbol)
             displayController.renderPlayGround(); //wird immer neu gerendert, deswegen muss der Div geleert werden
-            console.log("Player 1 spielt mit " + symbol);
+            checkWin();
             changePlayer();
         }else if (currentPlayer === player2) {
             gameBoard.setPlayGround(index, player2.playerSymbol)
             displayController.renderPlayGround();
-            console.log("Player 2 spielt mit " + symbol);
+            checkWin();
             changePlayer();
         }else{ //debug
             console.log("KEIN SPIELER DEFINIERT");
@@ -77,7 +77,32 @@ const gameController = (function(){
             currentPlayer = player1;
         }
     }
-    return {playGame, changePlayer};
+
+    const checkWin = () => { 
+        const board = gameBoard.getPlayGround();
+        //Alle Kombinationen: 0,1,2, 3,4,5, 6,7,8, 0,3,6, 1,4,7, 2,5,8, 0,4,8, 2,4,6
+        if (board[0] === board[1] && board[1] === board[2] && board[0] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName); 
+        }else if (board[3] === board[4] && board[4] === board[5] && board[3] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[6] === board[7] && board[7] === board[8] && board[6] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[0] === board[3] && board[3] === board[6] && board[0] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[1] === board[4] && board[4] === board[7] && board[1] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[2] === board[5] && board[5] === board[8] && board[2] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[0] === board[4] && board[4] === board[8] && board[0] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else if (board[2] === board[4] && board[4] === board[6] && board[2] !== "") {
+            console.log("WINNER: " + currentPlayer.playerName);
+        }else{
+            return;
+        }
+    }
+
+    return {playGame, changePlayer, checkWin}
 })();
 
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
