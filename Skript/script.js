@@ -94,9 +94,9 @@ const gameController = (function(){
         ];
 
     const checkWin = (playerSymbol) => {
-            return winConditions.some(function(threeInARow) {
-                return threeInARow.every(function(square) {
-                return board[square] === playerSymbol;
+            return winConditions.some(function(threeInARow) { //some prüft ob eine winCondition erfüllt ist, also ob es drei in einer Reihe gibt
+                return threeInARow.every(function(square) { //gleiches Symbol in den drei Feldern der winCondition?
+                return board[square] === playerSymbol;//welcher Spieler gewinnt? aktueller Spieler, der das Symbol gesetzt hat
             });
         });
 
@@ -114,28 +114,5 @@ const gameController = (function(){
     })();
 
 
-
-
-
-        /*
-        if (board[0] === board[1] && board[1] === board[2] && board[0] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName); 
-        }else if (board[3] === board[4] && board[4] === board[5] && board[3] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[6] === board[7] && board[7] === board[8] && board[6] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[0] === board[3] && board[3] === board[6] && board[0] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[1] === board[4] && board[4] === board[7] && board[1] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[2] === board[5] && board[5] === board[8] && board[2] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[0] === board[4] && board[4] === board[8] && board[0] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else if (board[2] === board[4] && board[4] === board[6] && board[2] !== "") {
-            console.log("WINNER: " + currentPlayer.playerName);
-        }else{
-            return;
-        }*/
     
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
