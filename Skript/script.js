@@ -51,18 +51,21 @@ const gameController = (function(){
 
     const player1 = createPlayer("Player 1", "X"); //neuer Spieler in createPlayer
     const player2 = createPlayer("Player 2", "O");
+    const board = gameBoard.getPlayGround();
     let currentPlayer = player1;
 
-    const playGame = (index, symbol) => { //index kommt vom Eventlistener, integer aus der foreach Schleife
+    const playGame = (index) => { //index kommt vom Eventlistener, integer aus der foreach Schleife
         if (currentPlayer === player1) {
             gameBoard.setPlayGround(index, player1.playerSymbol)
             displayController.renderPlayGround(); //wird immer neu gerendert, deswegen muss der Div geleert werden
             checkWin();
+            announceWinner();
             changePlayer();
         }else if (currentPlayer === player2) {
             gameBoard.setPlayGround(index, player2.playerSymbol)
             displayController.renderPlayGround();
             checkWin();
+            announceWinner();
             changePlayer();
         }else{ //debug
             console.log("KEIN SPIELER DEFINIERT");
@@ -78,9 +81,43 @@ const gameController = (function(){
         }
     }
 
-    const checkWin = () => { 
-        const board = gameBoard.getPlayGround();
-        //Alle Kombinationen: 0,1,2, 3,4,5, 6,7,8, 0,3,6, 1,4,7, 2,5,8, 0,4,8, 2,4,6
+//Alle Kombinationen: 0,1,2, 3,4,5, 6,7,8, 0,3,6, 1,4,7, 2,5,8, 0,4,8, 2,4,6
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+    const checkWin = (playerSymbol) => {
+            return winConditions.some(function(threeInARow) {
+                return threeInARow.every(function(square) {
+                return board[square] === playerSymbol;
+            });
+        });
+
+    }
+
+    const announceWinner = () => {
+        if(checkWin(currentPlayer.playerSymbol)){
+            console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
+        }else{
+            return;
+        }
+    }
+
+        return {playGame, changePlayer, checkWin, announceWinner}
+    })();
+
+
+
+
+
+        /*
         if (board[0] === board[1] && board[1] === board[2] && board[0] !== "") {
             console.log("WINNER: " + currentPlayer.playerName); 
         }else if (board[3] === board[4] && board[4] === board[5] && board[3] !== "") {
@@ -99,10 +136,6 @@ const gameController = (function(){
             console.log("WINNER: " + currentPlayer.playerName);
         }else{
             return;
-        }
-    }
-
-    return {playGame, changePlayer, checkWin}
-})();
-
+        }*/
+    
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
