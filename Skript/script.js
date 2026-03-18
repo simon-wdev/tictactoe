@@ -1,5 +1,9 @@
 const gameBoard = (function(){ //Module Pattern
-    let playGround = ["","","","","","","","",""] //9 Felder, tictactoe, 3x3, am Anfang leer
+    let playGround = ["","","","","","","","",""]; //9 Felder, tictactoe, 3x3, am Anfang leer
+    const resetBtn = document.querySelector(".resetBtn");
+
+
+
 
     const getPlayGround = () => playGround;
 
@@ -8,9 +12,21 @@ const gameBoard = (function(){ //Module Pattern
             console.log("Symbol: " + symbol + " Index: " + index);
             playGround[index] = symbol;
             
+    };
+
+    resetBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            resetPlayGround();
+        });
+
+
+    const resetPlayGround = () => 
+    {
+        playGround = ["","","","","","","","",""]
+        displayController.renderPlayGround();
     }
 
-    return {getPlayGround, setPlayGround}; //gibt die Funktionen für Außen zurück, playGround bleibt privat
+    return {getPlayGround, setPlayGround, resetPlayGround}; //gibt die Funktionen für Außen zurück, playGround bleibt privat
 
 
 })();
@@ -51,7 +67,6 @@ const gameController = (function(){
 
     const player1 = createPlayer("Player 1", "X"); //neuer Spieler in createPlayer
     const player2 = createPlayer("Player 2", "O");
-    const board = gameBoard.getPlayGround();
     let currentPlayer = player1;
 
     const playGame = (index) => { //index kommt vom Eventlistener, integer aus der foreach Schleife
@@ -94,18 +109,20 @@ const gameController = (function(){
         ];
 
     const checkWin = (playerSymbol) => {
+        const currentBoard = gameBoard.getPlayGround();
+
             return winConditions.some(function(threeInARow) { //some prüft ob eine winCondition erfüllt ist, also ob es drei in einer Reihe gibt
                 return threeInARow.every(function(square) { //gleiches Symbol in den drei Feldern der winCondition?
-                return board[square] === playerSymbol;//welcher Spieler gewinnt? aktueller Spieler, der das Symbol gesetzt hat
+                    return currentBoard[square] === playerSymbol;//ist ein Symbol vorhanden?
             });
         });
 
     }
 
     const announceWinner = () => {
-        if(checkWin(currentPlayer.playerSymbol)){
+        if(checkWin(currentPlayer.playerSymbol)){ //currentPlayer Symbol wird an checkWin übergeben. Hat der aktuelle Spieler gewonnen?
             console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
-        }else{
+        }else{ //wenn nicht, mach weiter
             return;
         }
     }
