@@ -1,3 +1,7 @@
+//Felder dürfen nicht überschrieben werden!
+
+
+
 const gameBoard = (function(){ //Module Pattern
     let playGround = ["","","","","","","","",""]; //9 Felder, tictactoe, 3x3, am Anfang leer
     const resetBtn = document.querySelector(".resetBtn");

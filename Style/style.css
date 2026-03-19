@@ -1,14 +1,51 @@
+:root{
+    --o-color: #BF092F;
+    --x-color: #132440;
+    --border-color: #16476A;
+    --text-color: #3B9797;
+}
+
+
 .square{
     height: 100px;
     width: 100px;
-    border: solid black 1px;
+    border: solid black 4px;
+    border-color: var(--border-color);
+    border-radius: 10px;
+    margin: 0 0 4px 4px;
     font-size: 30px;
+    align-content: center;
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out ;
+}
+
+.square:hover{
+    background-color: rgba(191, 9, 47, 0.06);
+    box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+
+}
+
+.resetBtn{
+    border: solid var(--border-color) 3px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 10px;
 }
 
 .game{
     display: flex;
     flex-direction: row;
+    gap: 0;
     flex-wrap: wrap;
-    width: 306px;
-    height: 306px;
+    width: 340px;
+    height: 330px;
+    text-align: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
