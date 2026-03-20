@@ -5,7 +5,6 @@
     --text-color: #3B9797;
 }
 
-
 .square{
     height: 100px;
     width: 100px;
@@ -13,7 +12,9 @@
     border-color: var(--border-color);
     border-radius: 10px;
     margin: 0 0 4px 4px;
-    font-size: 30px;
+    font-family: "Lexend", sans-serif;
+    font-weight: 300;
+    font-size: 70px;
     align-content: center;
     transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out ;
 }
