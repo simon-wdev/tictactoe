@@ -1,6 +1,3 @@
-//Felder dürfen nicht überschrieben werden!
-
-
 
 const gameBoard = (function(){ //Module Pattern
     let playGround = ["","","","","","","","",""]; //9 Felder, tictactoe, 3x3, am Anfang leer
@@ -71,30 +68,18 @@ const gameController = (function(){
     let currentPlayer = player1;
 
 
-    //REFACTOR VON DIESER FUNKTION (DRY-Prinzip)
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
     const isEmpty = gameBoard.getPlayGround();
 
-        if (isEmpty[index] != ""){
+        if (isEmpty[index] !== ""){
             return;
-        }
-
-        if (currentPlayer === player1) {
-            gameBoard.setPlayGround(index, player1.playerSymbol)
-            displayController.renderPlayGround(); //wird immer neu gerendert, deswegen muss der Div geleert werden
+        }else{
+            gameBoard.setPlayGround(index, currentPlayer.playerSymbol)
+            displayController.renderPlayGround()
             checkWin();
             checkTie();
             announceWinner();
             changePlayer();
-        }else if (currentPlayer === player2) {
-            gameBoard.setPlayGround(index, player2.playerSymbol)
-            displayController.renderPlayGround();
-            checkWin();
-            checkTie();
-            announceWinner();
-            changePlayer();
-        }else{ //debug
-            console.log("KEIN SPIELER DEFINIERT");
         }
     }
 
