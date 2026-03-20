@@ -117,6 +117,10 @@ const gameController = (function(){
     const checkTie = () => {
         const currentBoard = gameBoard.getPlayGround();
 
+        if(checkWin(currentPlayer.playerSymbol)){
+            return;
+        }
+
         if(currentBoard.every(function(square){
            return square !== ""
         })){
