@@ -72,7 +72,13 @@ const gameController = (function(){
 
 
     //REFACTOR VON DIESER FUNKTION (DRY-Prinzip)
-    const playGame = (index) => { //index kommt vom Eventlistener, integer aus der foreach Schleife
+    const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
+    const isEmpty = gameBoard.getPlayGround();
+
+        if (isEmpty[index] != ""){
+            return;
+        }
+
         if (currentPlayer === player1) {
             gameBoard.setPlayGround(index, player1.playerSymbol)
             displayController.renderPlayGround(); //wird immer neu gerendert, deswegen muss der Div geleert werden
