@@ -21,6 +21,7 @@ const gameBoard = (function(){ //Module Pattern
     const resetPlayGround = () => 
     {
         playGround = ["","","","","","","","",""] //erstelle ein neues, leeres gameboard
+        gameController.resetGameOver();
         displayController.renderPlayGround();//gameboard neu rendern
     }
 
@@ -32,7 +33,7 @@ const gameBoard = (function(){ //Module Pattern
 
 const displayController = (function(){
 
-    const renderPlayGround = (winnerSquares) =>{
+    const renderPlayGround = (winnerSquares) =>{ //winnerSquares kommt von playGame
         const board = gameBoard.getPlayGround(); //holt den Array
         const wrapper = document.querySelector(".game");//Div im HTML
 
@@ -47,12 +48,11 @@ const displayController = (function(){
                 square.classList.add(element === "X" ? "x-color" : "o-color")//wenn element "X" dann Klasse x-color ansonsten o-color
             }
 
-            if (winnerSquares && winnerSquares.includes(index)){
+            if (winnerSquares && winnerSquares.includes(index)){ //sind überhaupt Daten vorhanden und wenn ja auf welchem index der for each schleife?
                 square.classList.add("winnerHighlight")
-                console.log("MATCH GEFUNDEN")
             }
 
-            wrapper.appendChild(square); //füg das div in den Wrapper ein
+            wrapper.appendChild(square); //fügt das div in den Wrapper ein
 
             square.addEventListener('click', () => {
                 gameController.playGame(index);  
@@ -60,7 +60,7 @@ const displayController = (function(){
         });     
     }; 
 
-    return {renderPlayGround,};
+    return {renderPlayGround};
 })();
 
 const  createPlayer = (name, symbol) => { //returnt ein Objekt (Name und Symbol)
@@ -76,13 +76,16 @@ const gameController = (function(){
     const player1 = createPlayer("Player 1", "X", "var(--x-color)"); //neuer Spieler in createPlayer
     const player2 = createPlayer("Player 2", "O", "var(--o-color)");
     let currentPlayer = player1;
+    let gameOver = false;
+
+    const resetGameOver = () => gameOver = false;
 
 
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
     const isEmpty = gameBoard.getPlayGround();
     
 
-        if (isEmpty[index] !== ""){
+        if (isEmpty[index] !== "" || gameOver){
             return;
         } else {
             gameBoard.setPlayGround(index, currentPlayer.playerSymbol)
@@ -142,13 +145,14 @@ const gameController = (function(){
 
     const announceWinner = () => {
         if(checkWin(currentPlayer.playerSymbol)){ //currentPlayer Symbol wird an checkWin übergeben. Hat der aktuelle Spieler gewonnen?
+            gameOver = true;
             console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
         }else{ //wenn nicht, mach weiter
             return;
         }
     }
 
-        return {playGame, changePlayer, checkWin, checkTie, announceWinner}
+        return {playGame, changePlayer, checkWin, checkTie, announceWinner, resetGameOver}
     })();
 
 
