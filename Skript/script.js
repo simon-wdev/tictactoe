@@ -32,7 +32,7 @@ const gameBoard = (function(){ //Module Pattern
 
 const displayController = (function(){
 
-    const renderPlayGround = () =>{
+    const renderPlayGround = (winnerSquares) =>{
         const board = gameBoard.getPlayGround(); //holt den Array
         const wrapper = document.querySelector(".game");//Div im HTML
 
@@ -47,6 +47,10 @@ const displayController = (function(){
                 square.classList.add(element === "X" ? "x-color" : "o-color")//wenn element "X" dann Klasse x-color ansonsten o-color
             }
 
+            if (winnerSquares && winnerSquares.includes(index)){
+                square.classList.add("winnerHighlight")
+                console.log("MATCH GEFUNDEN")
+            }
 
             wrapper.appendChild(square); //füg das div in den Wrapper ein
 
@@ -56,7 +60,7 @@ const displayController = (function(){
         });     
     }; 
 
-    return {renderPlayGround};
+    return {renderPlayGround,};
 })();
 
 const  createPlayer = (name, symbol) => { //returnt ein Objekt (Name und Symbol)
@@ -76,12 +80,14 @@ const gameController = (function(){
 
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
     const isEmpty = gameBoard.getPlayGround();
+    
 
         if (isEmpty[index] !== ""){
             return;
         } else {
             gameBoard.setPlayGround(index, currentPlayer.playerSymbol)
-            displayController.renderPlayGround()
+            const winnerSquares = gameController.checkWin(currentPlayer.playerSymbol);
+            displayController.renderPlayGround(winnerSquares)
             checkWin();
             checkTie();
             announceWinner();
@@ -113,7 +119,7 @@ const gameController = (function(){
     const checkWin = (playerSymbol) => {
         const currentBoard = gameBoard.getPlayGround(); //holt den aktuellen Array, da das board resettet werden kann, muss immer das aktuelle array vorhanden sein
 
-            return winConditions.some(function(threeInARow) { //some prüft ob eine winCondition erfüllt ist, also ob es drei in einer Reihe gibt
+            return winConditions.find(function(threeInARow) { //some prüft ob eine winCondition erfüllt ist, also ob es drei in einer Reihe gibt
                 return threeInARow.every(function(square) { //gleiches Symbol in den drei Feldern der winCondition?
                     return currentBoard[square] === playerSymbol;//ist ein Symbol vorhanden?
             });
