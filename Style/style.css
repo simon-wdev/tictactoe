@@ -1,7 +1,7 @@
 :root{
     --o-color: #BF092F;
-    --x-color: #132440;
-    --border-color: #16476A;
+    --x-color: #16476A;
+    --border-color: #132440;
     --text-color: #3B9797;
 }
 
@@ -23,6 +23,14 @@
     background-color: rgba(191, 9, 47, 0.06);
     box-shadow: 8.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.25);
 
+}
+
+.x-color{
+    color: var(--x-color);
+}
+
+.o-color{
+    color: var(--o-color);
 }
 
 .resetBtn{

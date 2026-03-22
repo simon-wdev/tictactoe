@@ -42,6 +42,12 @@ const displayController = (function(){
             const square = document.createElement("div");
             square.classList.add("square");
             square.textContent = element; //wenn sich das Element ändert, ändert sich auch der Text im DIV
+
+            if (element !== ""){
+                square.classList.add(element === "X" ? "x-color" : "o-color")//wenn element "X" dann Klasse x-color ansonsten o-color
+            }
+
+
             wrapper.appendChild(square); //füg das div in den Wrapper ein
 
             square.addEventListener('click', () => {
@@ -63,8 +69,8 @@ const  createPlayer = (name, symbol) => { //returnt ein Objekt (Name und Symbol)
 
 const gameController = (function(){
 
-    const player1 = createPlayer("Player 1", "X"); //neuer Spieler in createPlayer
-    const player2 = createPlayer("Player 2", "O");
+    const player1 = createPlayer("Player 1", "X", "var(--x-color)"); //neuer Spieler in createPlayer
+    const player2 = createPlayer("Player 2", "O", "var(--o-color)");
     let currentPlayer = player1;
 
 
@@ -73,7 +79,7 @@ const gameController = (function(){
 
         if (isEmpty[index] !== ""){
             return;
-        }else{
+        } else {
             gameBoard.setPlayGround(index, currentPlayer.playerSymbol)
             displayController.renderPlayGround()
             checkWin();
