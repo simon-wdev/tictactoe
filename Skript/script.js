@@ -7,7 +7,6 @@ const gameBoard = (function(){ //Module Pattern
 
     const setPlayGround = (index, symbol) => //setzt später das Symbol an die Index Stelle
     {
-            console.log("Symbol: " + symbol + " Index: " + index);
             playGround[index] = symbol;
             
     };
@@ -21,7 +20,7 @@ const gameBoard = (function(){ //Module Pattern
     const resetPlayGround = () => 
     {
         playGround = ["","","","","","","","",""] //erstelle ein neues, leeres gameboard
-        gameController.resetGameOver();
+        gameController.resetGame();
         displayController.renderPlayGround();//gameboard neu rendern
     }
 
@@ -33,7 +32,7 @@ const gameBoard = (function(){ //Module Pattern
 
 const displayController = (function(){
 
-    const renderPlayGround = (winnerSquares) =>{ //winnerSquares kommt von playGame
+    const renderPlayGround = (winnerSquares, isTie) =>{ //winnerSquares kommt von playGame
         const board = gameBoard.getPlayGround(); //holt den Array
         const wrapper = document.querySelector(".game");//Div im HTML
 
@@ -50,6 +49,11 @@ const displayController = (function(){
 
             if (winnerSquares && winnerSquares.includes(index)){ //sind überhaupt Daten vorhanden und wenn ja auf welchem index der for each schleife?
                 square.classList.add("winnerHighlight")
+            }
+
+            if (isTie){
+                console.log(`HALLLOOOO ${isTie}`)
+                square.classList.add("tieHighlight")
             }
 
             wrapper.appendChild(square); //fügt das div in den Wrapper ein
@@ -77,8 +81,15 @@ const gameController = (function(){
     const player2 = createPlayer("Player 2", "O", "var(--o-color)");
     let currentPlayer = player1;
     let gameOver = false;
+    let isTie = false;
 
-    const resetGameOver = () => gameOver = false;
+    const tieCheck = () => isTie;
+
+    const resetGame = () => {
+        gameOver = false;
+        isTie = false;
+        currentPlayer = player1;
+    }
 
 
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
@@ -90,9 +101,9 @@ const gameController = (function(){
         } else {
             gameBoard.setPlayGround(index, currentPlayer.playerSymbol)
             const winnerSquares = gameController.checkWin(currentPlayer.playerSymbol);
-            displayController.renderPlayGround(winnerSquares)
-            checkWin();
             checkTie();
+            displayController.renderPlayGround(winnerSquares, tieCheck())
+            checkWin();
             announceWinner();
             changePlayer();
         }
@@ -140,6 +151,8 @@ const gameController = (function(){
            return square !== ""
         })){
             console.log("TIE, BOARD IS FULL")
+            isTie = true;
+            gameOver = true;
         }
     }
 
@@ -152,9 +165,15 @@ const gameController = (function(){
         }
     }
 
-        return {playGame, changePlayer, checkWin, checkTie, announceWinner, resetGameOver}
+        return {playGame, changePlayer, checkWin, checkTie, announceWinner, resetGame}
     })();
 
 
     
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
+
+
+
+//TODO
+//2. Tie Animation
+//3. Namenseingabe

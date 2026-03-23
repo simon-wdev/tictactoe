@@ -40,6 +40,11 @@
     animation: 1s linear fadein;
 }
 
+.tieHighlight{
+    background-color: rgba(191, 9, 47, 0.25);
+    animation:  1s linear fadein;
+}
+
 
 
 .x-color{
