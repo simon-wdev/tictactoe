@@ -190,5 +190,4 @@ const gameController = (function(){
 
     
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
-
-//TEST
+//EMAIL TEST
