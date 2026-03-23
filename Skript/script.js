@@ -56,6 +56,7 @@ const displayController = (function(){
             if (isTie){
                 square.classList.add("tieHighlight")
                 displayController.changeText("top", "TIE!")
+                displayController.changeText("bottom", "CLICK RESET TO START AGAIN")
             }
 
             wrapper.appendChild(square); //fügt das div in den Wrapper ein
@@ -178,6 +179,7 @@ const gameController = (function(){
         if(checkWin(currentPlayer.playerSymbol)){ //currentPlayer Symbol wird an checkWin übergeben. Hat der aktuelle Spieler gewonnen?
             gameOver = true;
             displayController.changeText("top", "WIN!");
+            displayController.changeText("bottom", "CLICK RESET TO START AGAIN")
             console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
         }else{ //wenn nicht, mach weiter
             return;
