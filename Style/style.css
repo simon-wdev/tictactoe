@@ -9,7 +9,7 @@ body{
     font-family: "Lexend", sans-serif;
 }
 
-.winText{
+.text{
     font-size: 1.6rem;
     color: var(--border-color);
     height: 50px;

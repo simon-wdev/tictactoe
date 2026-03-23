@@ -21,7 +21,8 @@ const gameBoard = (function(){ //Module Pattern
     {
         playGround = ["","","","","","","","",""] //erstelle ein neues, leeres gameboard
         gameController.resetGame();
-        displayController.changeText("TIC-TAC-TOE")
+        displayController.changeText("top", "TIC-TAC-TOE")
+        displayController.changeText("bottom", "START BY CLICKING A SQUARE")
         displayController.renderPlayGround();//gameboard neu rendern
     }
 
@@ -50,12 +51,12 @@ const displayController = (function(){
 
             if (winnerSquares && winnerSquares.includes(index)){ //sind überhaupt Daten vorhanden und wenn ja auf welchem index der for each schleife?
                 square.classList.add("winnerHighlight")
-                changeText("WIN!");
+                changeText("top", "WIN!");
             }
 
             if (isTie){
                 square.classList.add("tieHighlight")
-                displayController.changeText("TIE!")
+                displayController.changeText("top", "TIE!")
             }
 
             wrapper.appendChild(square); //fügt das div in den Wrapper ein
@@ -66,9 +67,16 @@ const displayController = (function(){
         });     
     };
     
-    const changeText = (text) => {
-        const winText = document.querySelector(".winText")
-            winText.innerHTML = `${text}`
+    const changeText = (position, text) => {
+        const winTextTop = document.querySelector(".winTextTop")
+        const winTextBottom = document.querySelector(".winTextBottom")
+            if (position == "top"){
+                winTextTop.innerHTML = `${text}`
+            }else if(position == "bottom"){
+                winTextBottom.innerHTML = `${text}`
+            }else{
+                console.log("TEXT POSITION NOT FOUND")
+            }
     };
 
     return {renderPlayGround, changeText};
@@ -124,10 +132,10 @@ const gameController = (function(){
 
         if (currentPlayer === player1) {
             currentPlayer = player2;
-            displayController.changeText(`${currentPlayer.playerName}'s turn!`)
+            displayController.changeText("bottom", `${currentPlayer.playerName}'s TURN!`)
         }else if (currentPlayer === player2) {
             currentPlayer = player1;
-            displayController.changeText(`${currentPlayer.playerName}'s turn!`)
+            displayController.changeText("bottom", `${currentPlayer.playerName}'s TURN!`)
         }
     }
 
