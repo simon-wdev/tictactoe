@@ -109,7 +109,6 @@ const gameController = (function(){
 
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
     const isEmpty = gameBoard.getPlayGround();
-    
 
         if (isEmpty[index] !== "" || gameOver){
             return;

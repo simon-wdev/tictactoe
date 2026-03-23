@@ -13,9 +13,15 @@ body{
     font-size: 1.6rem;
     color: var(--border-color);
     height: 50px;
-    margin: 20px;
 }
 
+.winTextTop{
+    margin-bottom: 20px;
+}
+
+.winTextBottom{
+    margin-top: 50px;
+}
 
 .square{
     height: 100px;
@@ -76,7 +82,7 @@ body{
     color: var(--border-color);
     font-family: "Lexend", sans-serif;
     padding: 10px;
-    margin: 30px;
+    margin: 20px 0 0 0;
     transition: 0.2s ease-in-out,
 }
 
