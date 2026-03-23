@@ -21,6 +21,7 @@ const gameBoard = (function(){ //Module Pattern
     {
         playGround = ["","","","","","","","",""] //erstelle ein neues, leeres gameboard
         gameController.resetGame();
+        displayController.changeText("TIC-TAC-TOE")
         displayController.renderPlayGround();//gameboard neu rendern
     }
 
@@ -49,11 +50,12 @@ const displayController = (function(){
 
             if (winnerSquares && winnerSquares.includes(index)){ //sind überhaupt Daten vorhanden und wenn ja auf welchem index der for each schleife?
                 square.classList.add("winnerHighlight")
+                changeText("WIN!");
             }
 
             if (isTie){
-                console.log(`HALLLOOOO ${isTie}`)
                 square.classList.add("tieHighlight")
+                displayController.changeText("TIE!")
             }
 
             wrapper.appendChild(square); //fügt das div in den Wrapper ein
@@ -62,9 +64,14 @@ const displayController = (function(){
                 gameController.playGame(index);  
             }); 
         });     
-    }; 
+    };
+    
+    const changeText = (text) => {
+        const winText = document.querySelector(".winText")
+            winText.innerHTML = `${text}`
+    };
 
-    return {renderPlayGround};
+    return {renderPlayGround, changeText};
 })();
 
 const  createPlayer = (name, symbol) => { //returnt ein Objekt (Name und Symbol)
@@ -111,10 +118,16 @@ const gameController = (function(){
 
     const changePlayer = () => { //wechselt den Spieler, erstmal nur funktional
 
+        if (isTie || gameOver){
+            return;
+        }
+
         if (currentPlayer === player1) {
             currentPlayer = player2;
+            displayController.changeText(`${currentPlayer.playerName}'s turn!`)
         }else if (currentPlayer === player2) {
             currentPlayer = player1;
+            displayController.changeText(`${currentPlayer.playerName}'s turn!`)
         }
     }
 
@@ -150,7 +163,6 @@ const gameController = (function(){
         if(currentBoard.every(function(square){
            return square !== ""
         })){
-            console.log("TIE, BOARD IS FULL")
             isTie = true;
             gameOver = true;
         }

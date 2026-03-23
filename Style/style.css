@@ -5,6 +5,18 @@
     --button-color: rgba(59,151,151,0.25);
 }
 
+body{
+    font-family: "Lexend", sans-serif;
+}
+
+.winText{
+    font-size: 1.6rem;
+    color: var(--border-color);
+    height: 50px;
+    margin: 20px;
+}
+
+
 .square{
     height: 100px;
     width: 100px;
@@ -64,7 +76,7 @@
     color: var(--border-color);
     font-family: "Lexend", sans-serif;
     padding: 10px;
-    margin: 50px;
+    margin: 30px;
     transition: 0.2s ease-in-out,
 }
 
