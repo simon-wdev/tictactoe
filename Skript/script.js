@@ -175,5 +175,4 @@ displayController.renderPlayGround();//rendert das Gameboard beim laden der Seit
 
 
 //TODO
-//2. Tie Animation
-//3. Namenseingabe
+//1. Namenseingabe
