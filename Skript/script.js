@@ -51,7 +51,6 @@ const displayController = (function(){
 
             if (winnerSquares && winnerSquares.includes(index)){ //sind überhaupt Daten vorhanden und wenn ja auf welchem index der for each schleife?
                 square.classList.add("winnerHighlight")
-                changeText("top", "WIN!");
             }
 
             if (isTie){
@@ -178,6 +177,7 @@ const gameController = (function(){
     const announceWinner = () => {
         if(checkWin(currentPlayer.playerSymbol)){ //currentPlayer Symbol wird an checkWin übergeben. Hat der aktuelle Spieler gewonnen?
             gameOver = true;
+            displayController.changeText("top", "WIN!");
             console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
         }else{ //wenn nicht, mach weiter
             return;
