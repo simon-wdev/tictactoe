@@ -122,6 +122,7 @@ const gameController = (function(){
                 player1 = createPlayer(player1Name, "X")
                 player2 = createPlayer(player2Name, "O")
                 currentPlayer = player1;
+                displayController.changeText("bottom", `${currentPlayer.playerName}'s TURN!`)
                 gameOver = false;
         });
 

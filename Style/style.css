@@ -103,6 +103,14 @@ label{
     font-size: 1.4rem;
 }
 
+.player1{
+    color: var(--x-color)
+}
+
+.player2{
+    color: var(--o-color)
+}
+
 input{
     height: 2rem;
     border-radius: 10px;
