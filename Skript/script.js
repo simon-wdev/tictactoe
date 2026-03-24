@@ -22,7 +22,7 @@ const gameBoard = (function(){ //Module Pattern
         playGround = ["","","","","","","","",""] //erstelle ein neues, leeres gameboard
         gameController.resetGame();
         displayController.changeText("top", "TIC-TAC-TOE")
-        displayController.changeText("bottom", "START BY CLICKING A SQUARE")
+        displayController.changeText("bottom", "START BY CLICKING A SQUARE OR ENTER NEW NAMES")
         displayController.renderPlayGround();//gameboard neu rendern
     }
 
@@ -92,19 +92,38 @@ const  createPlayer = (name, symbol) => { //returnt ein Objekt (Name und Symbol)
 
 const gameController = (function(){
 
-    const player1 = createPlayer("Player 1", "X", "var(--x-color)"); //neuer Spieler in createPlayer
-    const player2 = createPlayer("Player 2", "O", "var(--o-color)");
-    let currentPlayer = player1;
+    let player1;
+    let player2;
+    let currentPlayer
     let gameOver = false;
     let isTie = false;
+    const startBtn = document.querySelector(".startBtn")
 
     const tieCheck = () => isTie;
+
+    const noPlayer = () => gameOver = true;
 
     const resetGame = () => {
         gameOver = false;
         isTie = false;
         currentPlayer = player1;
     }
+        
+
+        startBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            const player1Name = document.querySelector('[name="p1"]').value
+            const player2Name = document.querySelector('[name="p2"]').value
+            const nameBox = document.getElementById("player")
+
+            if(!player1Name||!player2Name == null){
+                return;
+            }
+                player1 = createPlayer(player1Name, "X")
+                player2 = createPlayer(player2Name, "O")
+                currentPlayer = player1;
+                gameOver = false;
+        });
 
 
     const playGame = (index) => {  //index kommt vom Eventlistener, integer aus der foreach Schleife
@@ -153,7 +172,7 @@ const gameController = (function(){
     const checkWin = (playerSymbol) => {
         const currentBoard = gameBoard.getPlayGround(); //holt den aktuellen Array, da das board resettet werden kann, muss immer das aktuelle array vorhanden sein
 
-            return winConditions.find(function(threeInARow) { //some prüft ob eine winCondition erfüllt ist, also ob es drei in einer Reihe gibt
+            return winConditions.find(function(threeInARow) { //find findet die zutreffende win conditions und gibt die indices zurück
                 return threeInARow.every(function(square) { //gleiches Symbol in den drei Feldern der winCondition?
                     return currentBoard[square] === playerSymbol;//ist ein Symbol vorhanden?
             });
@@ -186,10 +205,14 @@ const gameController = (function(){
         }
     }
 
-        return {playGame, changePlayer, checkWin, checkTie, announceWinner, resetGame}
+        return {playGame, changePlayer, checkWin, checkTie, announceWinner, resetGame, noPlayer}
     })();
 
 
     
 displayController.renderPlayGround();//rendert das Gameboard beim laden der Seite
-//EMAIL TEST
+gameController.noPlayer();
+
+//NAMEN
+//Forms + Start Button, Text ändern
+//gamecontroller getPlayer function()

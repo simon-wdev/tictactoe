@@ -73,7 +73,11 @@ body{
     color: var(--o-color);
 }
 
-.resetBtn{
+.buttonWrapper{
+    display: flex;
+}
+
+.button{
     border: solid var(--border-color) 3px;
     background-color: white;
     border-radius: 10px;
@@ -82,13 +86,29 @@ body{
     color: var(--border-color);
     font-family: "Lexend", sans-serif;
     padding: 10px;
-    margin: 20px 0 0 0;
+    margin: 20px 20px 0 0;
     transition: 0.2s ease-in-out,
 }
 
-.resetBtn:hover{
+.button:hover{
     background-color: var(--button-color); 
     box-shadow: 4px 4px 7px -3px #000000;
+}
+
+.form{
+    margin-right: 20px;
+}
+
+label{
+    font-size: 1.4rem;
+}
+
+input{
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    font-family: "Lexend", sans-serif;
+    padding: 5px;
 }
 
 .game{
