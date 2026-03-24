@@ -114,7 +114,6 @@ const gameController = (function(){
             e.preventDefault();
             const player1Name = document.querySelector('[name="p1"]').value
             const player2Name = document.querySelector('[name="p2"]').value
-            const nameBox = document.getElementById("player")
 
             if(!player1Name||!player2Name == null){
                 return;
@@ -198,7 +197,7 @@ const gameController = (function(){
     const announceWinner = () => {
         if(checkWin(currentPlayer.playerSymbol)){ //currentPlayer Symbol wird an checkWin übergeben. Hat der aktuelle Spieler gewonnen?
             gameOver = true;
-            displayController.changeText("top", "WIN!");
+            displayController.changeText("top", `${currentPlayer.playerName} WINS!`);
             displayController.changeText("bottom", "CLICK RESET TO START AGAIN")
             console.log(`Player: ${currentPlayer.playerName} wins with ${currentPlayer.playerSymbol}`)
         }else{ //wenn nicht, mach weiter
